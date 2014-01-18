@@ -8,13 +8,14 @@ t_token	*new_token(int rows, int cols)
 	t = (t_token*)malloc(sizeof(t_token));
 	t->rows = rows;
 	t->cols = cols;
-	t->token = (char**)malloc(sizeof(char*) * rows);
+	t->token = (char**)malloc(sizeof(char*) * (rows + 1));
 	i = 0;
 	while (i < rows)
 	{
 		t->token[i] = (char*)malloc(cols);
 		i++;
 	}
+	t->token[i] = NULL;
 	return (t);
 }
 
@@ -50,7 +51,6 @@ t_token	*get_token(char **line)
 		token->token[i] = ft_strcpy(token->token[i], *line);
 		i++;
 	}
-	token->token[i] = NULL;
 	return (token);
 }
 
