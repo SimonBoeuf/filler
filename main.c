@@ -1,11 +1,5 @@
 # include "./includes/filler.h"
 
-void	ft_putstr(char *str)
-{
-	write(1, str, 3);
-	write(2, str, 3);
-}
-
 int	strstart(char *str, char *start)
 {
 	int	i;
@@ -23,30 +17,40 @@ int	strstart(char *str, char *start)
 		return (1);
 }
 
-int	get_token_lines(char *str)
+int	get_number(char *str)
 {
-	while (*str != ' ')
+	int	rslt;
+
+	rslt = 0;
+	while (*str > 47 && *str < 58)
+	{
+		rslt *= 10;
+		rslt += (*str + '0');
 		str++;
-	str++;
-	return (*str - 48);
+	}
+	return (rslt);
 }
+
 
 int	main()
 {
 	char	*line;
-	char	*token;
-	int	nblines;
+	t_token	*token;
+	char	*play;
 
-	nblines = -1;
-	token = "3 2\n";
-	while(get_next_line(0, &line) > 0 && nblines)
+	play = "3 2\n";
+	while(get_next_line(0, &line) > 0)
 	{
-		if(strstart(line, "Piece") && nblines)
+		if (strstart(line, "Piece"))
 		{
-			nblines = get_token_lines(line);
+			token = get_token(&line);
+			print_token(token);
 		}
-		nblines --;
+		if (token != NULL)
+		{
+			ft_putstr(play);
+			token = NULL;
+		}
 	}
-	ft_putstr(token);
 	return (0);
 }

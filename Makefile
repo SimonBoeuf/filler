@@ -5,7 +5,8 @@ NAME		= filler
 INCLUDE		= ./includes/
 
 SRCS		= 	main.c				\
-				ft_get_next_line.c	\
+			ft_get_next_line.c		\
+			token.c
 
 OBJS		= $(SRCS:.c=.o)
 
