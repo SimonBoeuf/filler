@@ -58,6 +58,14 @@ void	print_token(t_token *t)
 {
 	int	i;
 	i = 0;
+	ft_putstr_fd("rows : ", 2);
+	ft_putnbr_fd(t->rows, 2);
+	ft_putstr_fd("\ncols : ", 2);
+	ft_putnbr_fd(t->cols, 2);
+	ft_putstr_fd("\nToken :\n", 2);
 	while(i < t->rows)
-		ft_putendl(t->token[i]);
+	{
+		ft_putendl_fd(t->token[i],2);
+		i++;
+	}
 }

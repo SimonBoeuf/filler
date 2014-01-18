@@ -25,7 +25,7 @@ int	get_number(char *str)
 	while (*str > 47 && *str < 58)
 	{
 		rslt *= 10;
-		rslt += (*str + '0');
+		rslt += (*str - '0');
 		str++;
 	}
 	return (rslt);
@@ -45,6 +45,7 @@ int	main()
 		{
 			token = get_token(&line);
 			print_token(token);
+			ft_putendl_fd("token printed", 2);
 		}
 		if (token != NULL)
 		{
