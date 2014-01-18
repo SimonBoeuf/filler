@@ -1,0 +1,4 @@
+*.rb
+*.o
+maps/*
+players/*
