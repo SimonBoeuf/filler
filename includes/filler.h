@@ -34,5 +34,6 @@ int	get_number(char *str);
 t_token	*new_token(int	rows, int cols);
 t_token	*get_token(char **line);
 void	print_token(t_token *t);
+int	strstart(char *string, char *start);
 
 #endif
