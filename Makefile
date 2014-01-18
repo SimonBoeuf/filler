@@ -8,7 +8,8 @@ SRCS		= 	main.c				\
 			ft_get_next_line.c		\
 			token.c				\
 			misc.c				\
-			map.c
+			map.c				\
+			play.c
 
 OBJS		= $(SRCS:.c=.o)
 

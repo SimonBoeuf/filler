@@ -5,9 +5,8 @@ int	main()
 	char	*line;
 	t_token	*token;
 	t_map	*map;
-	char	*play;
+	t_play	*play;
 
-	play = "3 2\n";
 	while(get_next_line(0, &line) > 0)
 	{
 		if (strstart(line, "Plateau"))
@@ -24,7 +23,8 @@ int	main()
 		}
 		if (token != NULL)
 		{
-			ft_putstr(play);
+			play = get_play(map, token);
+			ft_putstr(play->string);
 			token = NULL;
 		}
 	}

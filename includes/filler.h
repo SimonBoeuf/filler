@@ -12,6 +12,14 @@
 # define P1 'O'
 # define P2 'X'
 
+typedef struct	s_play
+{
+	int	x;
+	int	y;
+	int	val;
+	char	*string;
+}		t_play;
+
 typedef struct	s_token
 {
 	int	rows;
@@ -33,6 +41,10 @@ char	*ft_strchr(char *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strcpy(char *s1, char *s2);
 void	ft_putnbr_fd(int n, int fd);
+char	*ft_itoa(int n);
+void	ft_bzero(char *s, int n);
+int	ft_strlen(char *s);
+char	*ft_strcat(char *s1, const char *s2);
 
 t_map	*init_map(int rows, int cols);
 char	*get_map_line(char *line);
@@ -47,5 +59,13 @@ void	print_token(t_token *t);
 
 int	strstart(char *string, char *start);
 int	get_number(char *str);
+
+t_play	*new_play(int x, int y);
+t_play	*get_play(t_map *map, t_token *token);
+t_play	**get_plays(t_map *map, t_token *token);
+int	get_nb_plays(t_map *map, t_token *token);
+t_play	*get_best_play(t_play **plays);
+t_play	*get_next_play(t_map *map, t_token *token, int lastplay);
+int	get_play_val(t_map *map, t_token *token, t_play *play);
 
 #endif
