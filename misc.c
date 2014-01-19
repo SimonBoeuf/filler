@@ -30,3 +30,12 @@ int	get_number(char *str)
 	}
 	return (rslt);
 }
+
+char	get_player(char *line)
+{
+	static char	player = 'Z';
+
+	if (player == 'Z')
+		player = line[10] == '1' ? P1 : P2;
+	return (player);
+}
