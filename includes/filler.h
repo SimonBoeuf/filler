@@ -45,6 +45,7 @@ char	*ft_itoa(int n);
 void	ft_bzero(char *s, int n);
 int	ft_strlen(char *s);
 char	*ft_strcat(char *s1, const char *s2);
+void	ft_putchar_fd(char c, int fd);
 
 t_map	*init_map(int rows, int cols);
 char	*get_map_line(char *line);

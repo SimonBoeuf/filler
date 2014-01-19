@@ -37,16 +37,27 @@ int	get_nb_plays(t_map *map, t_token *token)
 	int	j;
 	int	rslt;
 
-	i = 0;
+	i = -token->rows + 1;
 	rslt = 0;
-	while (i < map->rows)
+	while (i < token->rows)
 	{
-		j = 0;
+		j = -token->cols + 1;
 		while (j < map->cols)
 		{
 			if (i + token->rows < map->rows && j + token->cols < map->cols)
 			{
+				/*
+				ft_putstr_fd("token->rows : ", 2);
+				ft_putnbr_fd(token->rows, 2);
+				ft_putstr_fd(" token->cols : ", 2);
+				ft_putnbr_fd(token->cols, 2);
+				ft_putstr_fd(" i : ", 2);
+				ft_putnbr_fd(i, 2);
+				ft_putstr_fd(" j", 2);
+				ft_putnbr_fd(j, 2);
+				ft_putendl_fd("", 2);
 				if (play(map, token, i, j))
+				*/
 					rslt++;
 			}
 			j++;
@@ -61,6 +72,8 @@ int	play(t_map *map, t_token *token, int x, int y)
 	int	i;
 	int	j;
 	int	touch;
+	int	xtoplay;
+	int	ytoplay;
 
 	touch = 0;
 	i = 0;
@@ -69,27 +82,45 @@ int	play(t_map *map, t_token *token, int x, int y)
 		j = 0;
 		while (j < token->cols && touch < 2)
 		{
-			if (is_player(map->token[i + x][y + j]) && is_shape(token->token[i][j]))
+			if (i + x < 0)
+				xtoplay = map->rows + i + x;
+			else
+				xtoplay = x + i;
+			if (y + j < 0)
+				ytoplay = map->cols + j + y;
+			else
+				ytoplay = y + j;
+			/*
+			ft_putstr_fd("xy : ", 2);
+			ft_putnbr_fd(x, 2);
+			ft_putstr_fd(":", 2);
+			ft_putnbr_fd(y, 2);
+			ft_putstr_fd(" ", 2);
+			ft_putstr_fd("ij : ", 2);
+			ft_putnbr_fd(i, 2);
+			ft_putstr_fd(":", 2);
+			ft_putnbr_fd(j, 2);
+			ft_putstr_fd(" ", 2);
+			ft_putstr_fd("xpyp : ", 2);
+			ft_putnbr_fd(xtoplay, 2);
+			ft_putstr_fd(":", 2);
+			ft_putnbr_fd(ytoplay, 2);
+			ft_putstr_fd(" touch : ", 2);
+			ft_putnbr_fd(touch, 2);
+			ft_putendl_fd("", 2);
+			ft_putchar_fd(map->token[xtoplay][ytoplay], 2);
+			ft_putchar_fd(token->token[i][j], 2);
+			ft_putendl_fd("", 2);
+			*/
+			if (is_player(map->token[xtoplay][ytoplay]) && is_shape(token->token[i][j]))
 				touch++;
-			if (is_opponent_player(map->token[x + i][y + j]) && is_shape(token->token[i][j]))
+			if (is_opponent_player(map->token[xtoplay][ytoplay]) && is_shape(token->token[i][j]))
 				touch += 2;
 			j++;
 		}
 		i++;
 	}
-	/*
-	ft_putnbr_fd(x, 2);
-	ft_putstr_fd(":", 2);
-	ft_putnbr_fd(y, 2);
-	ft_putstr_fd(" ", 2);
-	ft_putnbr_fd(i, 2);
-	ft_putstr_fd(":", 2);
-	ft_putnbr_fd(j, 2);
-	ft_putstr_fd(" ", 2);
-	ft_putendl_fd("", 2);
-	ft_putstr_fd(&(map->token[x][y]), 2);
-	ft_putendl_fd("", 2);
-	*/
+	ft_putendl_fd("Done", 2);
 	return (touch == 1);
 }
 
@@ -133,11 +164,11 @@ t_play	*get_next_play(t_map *map, t_token *token, int lastplay)
 	int	rslt;
 	t_play	*nextplay;
 
-	i = 0;
+	i = -token->rows + 1;
 	rslt = 0;
 	while (i < map->rows && rslt <= lastplay)
 	{
-		j = 0;
+		j = -token->cols + 1;
 		while (j < map->cols && rslt <= lastplay)
 		{
 			if (i + token->rows < map->rows && j + token->cols < map->cols)
