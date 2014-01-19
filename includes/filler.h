@@ -66,7 +66,7 @@ t_play	*get_play(t_map *map, t_token *token);
 t_play	**get_plays(t_map *map, t_token *token);
 int	get_nb_plays(t_map *map, t_token *token);
 t_play	*get_best_play(t_play **plays);
-t_play	*get_next_play(t_map *map, t_token *token, int lastplay);
+t_play	*get_next_play(t_map *map, t_token *token);
 int	get_play_val(t_map *map, t_token *token, t_play *play);
 int	play(t_map *map, t_token *token, int x, int y);
 int	is_player(char c);

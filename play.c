@@ -21,6 +21,7 @@ t_play	*new_play(int	x, int	y)
 	return (p);
 }
 
+/*
 t_play	*get_play(t_map *map, t_token *token)
 {
 	t_play	**plays;
@@ -28,6 +29,15 @@ t_play	*get_play(t_map *map, t_token *token)
 
 	plays = get_plays(map, token);
 	bestplay = get_best_play(plays);
+	return (bestplay);
+}
+*/
+
+t_play	*get_play(t_map *map, t_token *token)
+{
+	t_play	*bestplay;
+
+	bestplay = get_next_play(map, token);
 	return (bestplay);
 }
 
@@ -139,51 +149,34 @@ int	is_shape(char c)
 	return (c == '*');
 }
 
-t_play	**get_plays(t_map *map, t_token *token)
-{
-	int	nbplays;
-	t_play	**plays;
-	int	i;
-
-	nbplays = get_nb_plays(map, token);
-	plays = (t_play**)malloc(sizeof(t_play*) * (nbplays + 1));
-	i = 0;
-	while (i < nbplays)
-	{
-		plays[i] = get_next_play(map, token, i);
-		i++;
-	}
-	plays[i] = NULL;
-	return (plays);
-}
-
-t_play	*get_next_play(t_map *map, t_token *token, int lastplay)
+t_play	*get_next_play(t_map *map, t_token *token)
 {
 	int	i;
 	int	j;
-	int	rslt;
 	t_play	*nextplay;
+	t_play	*bestplay;
 
 	i = -token->rows + 1;
-	rslt = 0;
-	while (i < map->rows && rslt <= lastplay)
+	bestplay = new_play(0, 0);
+	while (i < map->rows)
 	{
 		j = -token->cols + 1;
-		while (j < map->cols && rslt <= lastplay)
+		while (j < map->cols)
 		{
 			if (i + token->rows < map->rows && j + token->cols < map->cols)
 			{
 				if (play(map, token, i, j))
-					rslt++;
+				{
+					nextplay = new_play(j, i);
+					if ((nextplay->val = get_play_val(map, token, nextplay)) > bestplay->val)
+						bestplay = nextplay;
+				}
 			}
 			j++;
 		}
 		i++;
 	}
-
-	nextplay = new_play(j - 1, i - 1);
-	nextplay->val = get_play_val(map, token, nextplay);
-	return (nextplay);
+	return (bestplay);
 }
 
 int	get_play_val(t_map *map, t_token *token, t_play *play)
