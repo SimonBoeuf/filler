@@ -44,8 +44,11 @@ int	get_nb_plays(t_map *map, t_token *token)
 		j = 0;
 		while (j < map->cols)
 		{
-			if (play(map, token, i, j))
-				rslt++;
+			if (i + token->rows < map->rows && j + token->cols < map->cols)
+			{
+				if (play(map, token, i, j))
+					rslt++;
+			}
 			j++;
 		}
 		i++;
@@ -61,10 +64,10 @@ int	play(t_map *map, t_token *token, int x, int y)
 
 	touch = 0;
 	i = 0;
-	while (i < token->rows && x + i < map->rows)
+	while (i < token->rows && touch < 2)
 	{
 		j = 0;
-		while (j < token->cols && y + j < map->cols)
+		while (j < token->cols && touch < 2)
 		{
 			if (is_player(map->token[i + x][y + j]) && is_shape(token->token[i][j]))
 				touch++;
@@ -137,8 +140,11 @@ t_play	*get_next_play(t_map *map, t_token *token, int lastplay)
 		j = 0;
 		while (j < map->cols && rslt <= lastplay)
 		{
-			if (play(map, token, i, j))
-				rslt++;
+			if (i + token->rows < map->rows && j + token->cols < map->cols)
+			{
+				if (play(map, token, i, j))
+					rslt++;
+			}
 			j++;
 		}
 		i++;
