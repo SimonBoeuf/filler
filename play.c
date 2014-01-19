@@ -33,9 +33,76 @@ t_play	*get_play(t_map *map, t_token *token)
 
 int	get_nb_plays(t_map *map, t_token *token)
 {
-	map = map;
-	token = token;
-	return (1);
+	int	i;
+	int	j;
+	int	rslt;
+
+	i = 0;
+	rslt = 0;
+	while (i < map->rows)
+	{
+		j = 0;
+		while (j < map->cols)
+		{
+			if (play(map, token, i, j))
+				rslt++;
+			j++;
+		}
+		i++;
+	}
+	return (rslt);
+}
+
+int	play(t_map *map, t_token *token, int x, int y)
+{
+	int	i;
+	int	j;
+	int	touch;
+
+	touch = 0;
+	i = 0;
+	while (i < token->rows && x + i < map->rows)
+	{
+		j = 0;
+		while (j < token->cols && y + j < map->cols)
+		{
+			if (is_player(map->token[i + x][y + j]) && is_shape(token->token[i][j]))
+				touch++;
+			if (is_opponent_player(map->token[x + i][y + j]) && is_shape(token->token[i][j]))
+				touch += 2;
+			j++;
+		}
+		i++;
+	}
+	/*
+	ft_putnbr_fd(x, 2);
+	ft_putstr_fd(":", 2);
+	ft_putnbr_fd(y, 2);
+	ft_putstr_fd(" ", 2);
+	ft_putnbr_fd(i, 2);
+	ft_putstr_fd(":", 2);
+	ft_putnbr_fd(j, 2);
+	ft_putstr_fd(" ", 2);
+	ft_putendl_fd("", 2);
+	ft_putstr_fd(&(map->token[x][y]), 2);
+	ft_putendl_fd("", 2);
+	*/
+	return (touch == 1);
+}
+
+int	is_player(char c)
+{
+	return (c == 'O' || c == 'o');
+}
+
+int	is_opponent_player(char c)
+{
+	return (c == 'X' || c == 'x');
+}
+
+int	is_shape(char c)
+{
+	return (c == '*');
 }
 
 t_play	**get_plays(t_map *map, t_token *token)
@@ -45,24 +112,41 @@ t_play	**get_plays(t_map *map, t_token *token)
 	int	i;
 
 	nbplays = get_nb_plays(map, token);
-	plays = (t_play**)malloc(sizeof(t_play*));
+	plays = (t_play**)malloc(sizeof(t_play*) * (nbplays + 1));
 	i = 0;
 	while (i < nbplays)
 	{
 		plays[i] = get_next_play(map, token, i);
 		i++;
 	}
+	plays[i] = NULL;
 	return (plays);
 }
 
 t_play	*get_next_play(t_map *map, t_token *token, int lastplay)
 {
-	t_play	*play;
+	int	i;
+	int	j;
+	int	rslt;
+	t_play	*nextplay;
 
-	play = new_play(2, 3);
-	lastplay = lastplay;
-	play->val = get_play_val(map, token, play);
-	return (play);
+	i = 0;
+	rslt = 0;
+	while (i < map->rows && rslt <= lastplay)
+	{
+		j = 0;
+		while (j < map->cols && rslt <= lastplay)
+		{
+			if (play(map, token, i, j))
+				rslt++;
+			j++;
+		}
+		i++;
+	}
+
+	nextplay = new_play(j - 1, i - 1);
+	nextplay->val = get_play_val(map, token, nextplay);
+	return (nextplay);
 }
 
 int	get_play_val(t_map *map, t_token *token, t_play *play)
