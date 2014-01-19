@@ -7,6 +7,7 @@ int	main()
 	t_map	*map;
 	t_play	*play;
 
+	token = NULL;
 	while(get_next_line(0, &line) > 0)
 	{
 		if (strstart(line, "Plateau"))

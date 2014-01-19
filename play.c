@@ -63,46 +63,16 @@ int	play(t_map *map, t_token *token, int x, int y)
 	int	touch;
 
 	touch = 0;
-	i = -token->rows;
+	i = 0;
 	while (i < token->rows && touch < 2)
 	{
-		j = -token->cols;
+		j = 0;
 		while (j < token->cols && touch < 2)
 		{
-			if (x + i < 0)
-			{
-				if (y + j < 0)
-				{
-					if (is_player(map->token[map->rows + (i + x)][map->cols + (y + j)]) && is_shape(token->token[i][j]))
-						touch++;
-					if (is_opponent_player(map->token[map->rows + (i + x)][map->cols + (y + j)]) && is_shape(token->token[i][j]))
-						touch += 2;
-				}
-				else
-				{
-					if (is_player(map->token[map->rows + (i + x)][y + j]) && is_shape(token->token[i][j]))
-						touch++;
-					if (is_opponent_player(map->token[map->rows + ( i + x)][y + j]) && is_shape(token->token[i][j]))
-						touch += 2;
-				}
-			}
-			else
-			{
-				if (j + y < 0)
-				{
-					if (is_player(map->token[i + x][map->cols + (y + j)]) && is_shape(token->token[i][j]))
-						touch++;
-					if (is_opponent_player(map->token[x + i][map->cols + (y + j)]) && is_shape(token->token[i][j]))
-						touch += 2;
-				}
-				else
-				{
-					if (is_player(map->token[i + x][y + j]) && is_shape(token->token[i][j]))
-						touch++;
-					if (is_opponent_player(map->token[x + i][y + j]) && is_shape(token->token[i][j]))
-						touch += 2;
-				}
-			}
+			if (is_player(map->token[i + x][y + j]) && is_shape(token->token[i][j]))
+				touch++;
+			if (is_opponent_player(map->token[x + i][y + j]) && is_shape(token->token[i][j]))
+				touch += 2;
 			j++;
 		}
 		i++;
