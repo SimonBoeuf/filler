@@ -60,6 +60,7 @@ void	print_token(t_token *t);
 
 int	strstart(char *string, char *start);
 int	get_number(char *str);
+char	get_player(char *line);
 
 t_play	*new_play(int x, int y);
 t_play	*get_play(t_map *map, t_token *token);

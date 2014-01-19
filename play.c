@@ -120,18 +120,24 @@ int	play(t_map *map, t_token *token, int x, int y)
 		}
 		i++;
 	}
-	ft_putendl_fd("Done", 2);
+	//ft_putendl_fd("Done", 2);
 	return (touch == 1);
 }
 
 int	is_player(char c)
 {
-	return (c == 'O' || c == 'o');
+	char	player;
+
+	player = get_player(NULL);
+	return (c == player || c == player + 32);
 }
 
 int	is_opponent_player(char c)
 {
-	return (c == 'X' || c == 'x');
+	char	opponent_player;
+
+	opponent_player = get_player(NULL) == P1 ? P2 : P1;
+	return (c == opponent_player || c == opponent_player + 32);
 }
 
 int	is_shape(char c)
