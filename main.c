@@ -14,6 +14,7 @@ int	main()
 		if (strstart(line, "$$$"))
 		{
 			player = get_player(line);
+			player = player;
 			//ft_putstr_fd("player : ", 2);
 			//ft_putchar_fd(player, 2);
 			//ft_putendl_fd("", 2);
