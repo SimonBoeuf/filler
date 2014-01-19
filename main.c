@@ -14,9 +14,9 @@ int	main()
 		if (strstart(line, "$$$"))
 		{
 			player = get_player(line);
-			ft_putstr_fd("player : ", 2);
-			ft_putchar_fd(player, 2);
-			ft_putendl_fd("", 2);
+			//ft_putstr_fd("player : ", 2);
+			//ft_putchar_fd(player, 2);
+			//ft_putendl_fd("", 2);
 		}
 		if (strstart(line, "Plateau"))
 		{
