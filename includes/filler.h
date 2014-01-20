@@ -9,8 +9,8 @@
 
 # define BUFF_SIZE 64
 
-# define P1 'O'
-# define P2 'X'
+# define P1 'o'
+# define P2 'x'
 
 typedef struct	s_play
 {
@@ -28,6 +28,20 @@ typedef struct	s_token
 }		t_token;
 
 typedef	t_token t_map;
+
+typedef struct	s_cell
+{
+	int	x;
+	int	y;
+	int	live;
+	struct s_cell	*next;
+}		t_cell;
+
+typedef struct	s_island
+{
+	t_cell	*first;
+	int	nbcells;
+}		t_island;
 
 int	get_next_line(int fd, char **line);
 
@@ -60,12 +74,27 @@ void	print_token(t_token *t);
 
 int	strstart(char *string, char *start);
 int	get_number(char *str);
+int	abs(int n);
+int	min(int n1, int n2);
+
 char	get_player(char *line);
+char	get_opponent_player(void);
 
 t_play	*new_play(int x, int y);
 t_play	*get_next_play(t_map *map, t_token *token);
-int	get_play_val(t_map *map, t_token *token, t_play *play);
+int	get_play_val(t_token *token, t_play *play, t_map *map);
 int	play(t_map *map, t_token *token, int x, int y);
+
+t_cell	*new_cell(int x, int y);
+int	get_cell_val(t_cell *c, t_token *t, t_play *p, t_map *m);
+void	get_cells_lives(t_island *i, t_map *m);
+void	remove_cell(t_cell *c, t_island *i);
+
+t_island	*get_island(char *line, int x);
+t_island	*get_op_island(char *line, int x);
+t_island	*init_island(void);
+void		add_cell(t_island *island, int x, int y);
+void		print_island(t_island *i);
 
 int	is_player(char c);
 int	is_opponent_player(char c);

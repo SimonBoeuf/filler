@@ -31,11 +31,13 @@ int	get_number(char *str)
 	return (rslt);
 }
 
-char	get_player(char *line)
-{
-	static char	player = 'Z';
 
-	if (player == 'Z')
-		player = line[10] == '1' ? P1 : P2;
-	return (player);
+int	abs(int n)
+{
+	return (n < 0 ? -n : n);
+}
+
+int	min(int n1, int n2)
+{
+	return (n1 > n2 ? n2 : n1);
 }

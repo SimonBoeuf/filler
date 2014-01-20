@@ -37,9 +37,13 @@ t_map	*get_map(char **line)
 	while(i < map->rows)
 	{
 		get_next_line(0, line);
+		get_island(*line, i);
+		get_op_island(*line, i);
 		map->token[i] = ft_strcpy(map->token[i], get_map_line(*line));
 		i++;
 	}
+	get_cells_lives(get_island(NULL, 0), map);
+	get_cells_lives(get_op_island(NULL, 0), map);
 	return (map);
 }
 

@@ -58,17 +58,17 @@ t_play	*get_next_play(t_map *m, t_token *t)
 	t_play	*bp;
 
 	bp = new_play(0, 0);
-	i = -t->rows + 1;
+	i = -t->rows;
 	while (i < m->rows)
 	{
-		j = -t->cols + 1;
+		j = -t->cols;
 		while (j < m->cols)
 		{
 			if (i + t->rows < m->rows && j + t->cols < m->cols)
 				if (play(m, t, i, j))
 				{
 					np = new_play(j, i);
-					if ((np->val = get_play_val(m, t, np))
+					if ((np->val = get_play_val(t, np, m))
 							> bp->val)
 						bp = np;
 				}
@@ -79,10 +79,21 @@ t_play	*get_next_play(t_map *m, t_token *t)
 	return (bp);
 }
 
-int	get_play_val(t_map *map, t_token *token, t_play *play)
+int	get_play_val(t_token *token, t_play *play, t_map *map)
 {
-	map = map;
-	token = token;
-	play = play;
-	return (1);
+	int	val;
+	t_island	*op_i;
+	t_cell		*cursor;
+
+	op_i = get_op_island(NULL, 0);
+	cursor = op_i->first;
+	val = 1;
+	while (cursor != NULL)
+	{
+		val += get_cell_val(cursor, token, play, map);
+		cursor = cursor->next;
+	}
+	ft_putnbr_fd(val, 2);
+	ft_putendl_fd("", 2);
+	return (val);
 }

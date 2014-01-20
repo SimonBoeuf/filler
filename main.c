@@ -7,6 +7,8 @@ int	main()
 	t_map	*map;
 	t_play	*play;
 	char	player;
+	//t_island *island;
+	//t_island *opisland;
 
 	token = NULL;
 	while(get_next_line(0, &line) > 0)
@@ -22,7 +24,11 @@ int	main()
 		if (strstart(line, "Plateau"))
 		{
 			map = get_map(&line);
+			//island = get_island(NULL, 0);
+			//opisland = get_op_island(NULL, 0);
 			//print_map(map);
+			//print_island(island);
+			//print_island(opisland);
 			//ft_putendl_fd("map printed",2 );
 		}
 		if (strstart(line, "Piece"))

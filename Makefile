@@ -10,7 +10,10 @@ SRCS		= 	main.c				\
 			misc.c				\
 			map.c				\
 			play.c				\
-			check_cell.c
+			check_cell.c			\
+			island.c			\
+			cell.c				\
+			player.c
 
 OBJS		= $(SRCS:.c=.o)
 
