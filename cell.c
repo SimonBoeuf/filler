@@ -31,7 +31,7 @@ int	get_cell_val(t_cell *c, t_token *t, t_play *p, t_map *m)
 			{
 				xtp = i + p->x < 0 ? m->rows + i + p->x : i + p->x;
 				ytp = j + p->y < 0 ? m->cols + j + p->y : j + p->y;
-				if (abs(xtp - c->x) == 1 || abs(ytp - c->y == 1))
+				if (abs(xtp - c->x) - abs(ytp - c->y) == 1)
 					return(-1);
 				if (m->rows + m->cols - min(abs(xtp - c->x), abs(ytp - c->y)) > val)
 						val = m->rows + m->cols - min(abs(xtp - c->x), abs(ytp - c->y));
