@@ -11,6 +11,7 @@
 
 # define P1 'o'
 # define P2 'x'
+# define MAXINT 2147483647
 
 typedef struct	s_play
 {

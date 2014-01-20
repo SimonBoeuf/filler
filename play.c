@@ -82,6 +82,7 @@ t_play	*get_next_play(t_map *m, t_token *t)
 int	get_play_val(t_token *token, t_play *play, t_map *map)
 {
 	int	val;
+	int	tmpval;
 	t_island	*op_i;
 	t_cell		*cursor;
 
@@ -90,10 +91,11 @@ int	get_play_val(t_token *token, t_play *play, t_map *map)
 	val = 1;
 	while (cursor != NULL)
 	{
-		val += get_cell_val(cursor, token, play, map);
+		if ((tmpval = get_cell_val(cursor, token, play, map)) < 0)
+			return (MAXINT);
+		else
+		val += tmpval;
 		cursor = cursor->next;
 	}
-	ft_putnbr_fd(val, 2);
-	ft_putendl_fd("", 2);
 	return (val);
 }
