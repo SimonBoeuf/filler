@@ -33,7 +33,7 @@ int	main()
 		}
 		if (token != NULL)
 		{
-			play = get_play(map, token);
+			play = get_next_play(map, token);
 			ft_putstr(play->string);
 			token = NULL;
 		}

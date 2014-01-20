@@ -9,7 +9,8 @@ SRCS		= 	main.c				\
 			token.c				\
 			misc.c				\
 			map.c				\
-			play.c
+			play.c				\
+			check_cell.c
 
 OBJS		= $(SRCS:.c=.o)
 

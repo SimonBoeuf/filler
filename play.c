@@ -21,62 +21,6 @@ t_play	*new_play(int	x, int	y)
 	return (p);
 }
 
-/*
-t_play	*get_play(t_map *map, t_token *token)
-{
-	t_play	**plays;
-	t_play	*bestplay;
-
-	plays = get_plays(map, token);
-	bestplay = get_best_play(plays);
-	return (bestplay);
-}
-*/
-
-t_play	*get_play(t_map *map, t_token *token)
-{
-	t_play	*bestplay;
-
-	bestplay = get_next_play(map, token);
-	return (bestplay);
-}
-
-int	get_nb_plays(t_map *map, t_token *token)
-{
-	int	i;
-	int	j;
-	int	rslt;
-
-	i = -token->rows + 1;
-	rslt = 0;
-	while (i < token->rows)
-	{
-		j = -token->cols + 1;
-		while (j < map->cols)
-		{
-			if (i + token->rows < map->rows && j + token->cols < map->cols)
-			{
-				/*
-				ft_putstr_fd("token->rows : ", 2);
-				ft_putnbr_fd(token->rows, 2);
-				ft_putstr_fd(" token->cols : ", 2);
-				ft_putnbr_fd(token->cols, 2);
-				ft_putstr_fd(" i : ", 2);
-				ft_putnbr_fd(i, 2);
-				ft_putstr_fd(" j", 2);
-				ft_putnbr_fd(j, 2);
-				ft_putendl_fd("", 2);
-				if (play(map, token, i, j))
-				*/
-					rslt++;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (rslt);
-}
-
 int	play(t_map *map, t_token *token, int x, int y)
 {
 	int	i;
@@ -92,36 +36,8 @@ int	play(t_map *map, t_token *token, int x, int y)
 		j = 0;
 		while (j < token->cols && touch < 2)
 		{
-			if (i + x < 0)
-				xtoplay = map->rows + i + x;
-			else
-				xtoplay = x + i;
-			if (y + j < 0)
-				ytoplay = map->cols + j + y;
-			else
-				ytoplay = y + j;
-			/*
-			ft_putstr_fd("xy : ", 2);
-			ft_putnbr_fd(x, 2);
-			ft_putstr_fd(":", 2);
-			ft_putnbr_fd(y, 2);
-			ft_putstr_fd(" ", 2);
-			ft_putstr_fd("ij : ", 2);
-			ft_putnbr_fd(i, 2);
-			ft_putstr_fd(":", 2);
-			ft_putnbr_fd(j, 2);
-			ft_putstr_fd(" ", 2);
-			ft_putstr_fd("xpyp : ", 2);
-			ft_putnbr_fd(xtoplay, 2);
-			ft_putstr_fd(":", 2);
-			ft_putnbr_fd(ytoplay, 2);
-			ft_putstr_fd(" touch : ", 2);
-			ft_putnbr_fd(touch, 2);
-			ft_putendl_fd("", 2);
-			ft_putchar_fd(map->token[xtoplay][ytoplay], 2);
-			ft_putchar_fd(token->token[i][j], 2);
-			ft_putendl_fd("", 2);
-			*/
+			xtoplay = i + x < 0 ? map->rows + i + x : x + i;
+			ytoplay = y + j < 0 ? map->cols + j + y : y + j;
 			if (is_player(map->token[xtoplay][ytoplay]) && is_shape(token->token[i][j]))
 				touch++;
 			if (is_opponent_player(map->token[xtoplay][ytoplay]) && is_shape(token->token[i][j]))
@@ -130,59 +46,37 @@ int	play(t_map *map, t_token *token, int x, int y)
 		}
 		i++;
 	}
-	//ft_putendl_fd("Done", 2);
 	return (touch == 1);
 }
 
-int	is_player(char c)
-{
-	char	player;
 
-	player = get_player(NULL);
-	return (c == player || c == player + 32);
-}
-
-int	is_opponent_player(char c)
-{
-	char	opponent_player;
-
-	opponent_player = get_player(NULL) == P1 ? P2 : P1;
-	return (c == opponent_player || c == opponent_player + 32);
-}
-
-int	is_shape(char c)
-{
-	return (c == '*');
-}
-
-t_play	*get_next_play(t_map *map, t_token *token)
+t_play	*get_next_play(t_map *m, t_token *t)
 {
 	int	i;
 	int	j;
-	t_play	*nextplay;
-	t_play	*bestplay;
+	t_play	*np;
+	t_play	*bp;
 
-	i = -token->rows + 1;
-	bestplay = new_play(0, 0);
-	while (i < map->rows)
+	bp = new_play(0, 0);
+	i = -t->rows + 1;
+	while (i < m->rows)
 	{
-		j = -token->cols + 1;
-		while (j < map->cols)
+		j = -t->cols + 1;
+		while (j < m->cols)
 		{
-			if (i + token->rows < map->rows && j + token->cols < map->cols)
-			{
-				if (play(map, token, i, j))
+			if (i + t->rows < m->rows && j + t->cols < m->cols)
+				if (play(m, t, i, j))
 				{
-					nextplay = new_play(j, i);
-					if ((nextplay->val = get_play_val(map, token, nextplay)) > bestplay->val)
-						bestplay = nextplay;
+					np = new_play(j, i);
+					if ((np->val = get_play_val(m, t, np))
+							> bp->val)
+						bp = np;
 				}
-			}
 			j++;
 		}
 		i++;
 	}
-	return (bestplay);
+	return (bp);
 }
 
 int	get_play_val(t_map *map, t_token *token, t_play *play)
@@ -191,20 +85,4 @@ int	get_play_val(t_map *map, t_token *token, t_play *play)
 	token = token;
 	play = play;
 	return (1);
-}
-
-t_play	*get_best_play(t_play	**plays)
-{
-	int	i;
-	t_play	*best;
-
-	i = 0;
-	best = plays[0];
-	while (plays[i])
-	{
-		if (plays[i]->val > best->val)
-			best = plays[i];
-		i++;
-	}
-	return (best);
 }

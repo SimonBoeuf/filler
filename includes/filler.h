@@ -63,15 +63,11 @@ int	get_number(char *str);
 char	get_player(char *line);
 
 t_play	*new_play(int x, int y);
-t_play	*get_play(t_map *map, t_token *token);
-t_play	**get_plays(t_map *map, t_token *token);
-int	get_nb_plays(t_map *map, t_token *token);
-t_play	*get_best_play(t_play **plays);
 t_play	*get_next_play(t_map *map, t_token *token);
 int	get_play_val(t_map *map, t_token *token, t_play *play);
 int	play(t_map *map, t_token *token, int x, int y);
+
 int	is_player(char c);
 int	is_opponent_player(char c);
 int	is_shape(char c);
-
 #endif
