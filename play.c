@@ -58,13 +58,13 @@ t_play	*get_next_play(t_map *m, t_token *t)
 	t_play	*bp;
 
 	bp = new_play(0, 0);
-	i = -t->rows;
+	i = 0;
 	while (i < m->rows)
 	{
-		j = -t->cols;
+		j = 0;
 		while (j < m->cols)
 		{
-			if (i + t->rows < m->rows && j + t->cols < m->cols)
+			if (i + t->rows <= m->rows && j + t->cols <= m->cols)
 				if (play(m, t, i, j))
 				{
 					np = new_play(j, i);
@@ -81,21 +81,23 @@ t_play	*get_next_play(t_map *m, t_token *t)
 
 int	get_play_val(t_token *token, t_play *play, t_map *map)
 {
-	int	val;
-	int	tmpval;
-	t_island	*op_i;
-	t_cell		*cursor;
+	int		val;
+	t_play	*wall;
+	t_play	*opponent;
 
-	op_i = get_op_island(NULL, 0);
-	cursor = op_i->first;
-	val = 1;
-	while (cursor != NULL)
-	{
-		if ((tmpval = get_cell_val(cursor, token, play, map)) < 0)
-			return (MAXINT);
-		else
-		val += tmpval;
-		cursor = cursor->next;
-	}
+	//Trouver l'orientation du joueur adverse
+	opponent = get_op_direction(play, map);
+	//Recuperer le mur le plus proche de l'adversaire et la partie du mur la plus simple a atteindre
+	val = get_wall_to_reach_dist(play, map, token, opponent); 
 	return (val);
+}
+
+t_play	*get_op_direction(t_play *play, t_map *map)
+{
+	t_island	*is
+}
+
+int	get_wall_to_reach_dist(play, map, token, wall)
+{
+	
 }
