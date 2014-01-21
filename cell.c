@@ -47,28 +47,22 @@ void	get_cells_lives(t_island *i, t_map *m)
 {
 	int	lives;
 	t_cell *c;
-	int	xtoplay;
-	int	ytoplay;
 
 	c = i->first;
 	while (c != NULL)
 	{
 		lives = 0;
-		xtoplay = c->x - 1 < 0 ? m->rows - 1: c->x - 1;
-		ytoplay = c->y - 1 < 0 ? m->cols - 1: c->y - 1;
-		if (m->token[xtoplay][ytoplay] == '.')
+		if (m->token[c->x < 1 ? m->rows - 1 : c->x - 1]
+				[c->y < 1 ? m->cols - 1 : c->y - 1] == '.')
 			lives++;
-		xtoplay = c->x + 1 >= m->rows ? m->rows - 1: c->x + 1;
-		ytoplay = c->y - 1 < 0 ? m->cols - 1 : c->y - 1;
-		if (m->token[xtoplay][ytoplay] == '.')
+		if (m->token[c->x + 1 >= m->rows ? m->rows - 1 : c->x + 1]
+				[c->y < 1 ? m->cols - 1 : c->y - 1] == '.')
 			lives++;
-		xtoplay = c->x - 1 < 0 ? m->rows - 1: c->x - 1;
-		ytoplay = c->y - 1 >= m->cols ? m->cols - 1 : c->y + 1;
-		if (m->token[xtoplay][ytoplay] == '.')
+		if (m->token[c->x < 1 ? m->rows - 1 : c->x - 1]
+				[c->y + 1 >= m->cols ? m->cols - 1 : c->y + 1])
 			lives++;
-		xtoplay = c->x + 1 >= m->rows ? m->rows - 1: c->x + 1;
-		ytoplay = c->y - 1 >= m->cols ? m->cols - 1 : c->y + 1;
-		if (m->token[xtoplay][ytoplay] == '.')
+		if (m->token[c->x + 1 >= m->rows ? m->rows - 1 : c->x + 1]
+				[c->y + 1 >= m->cols ? m->cols - 1 : c->y + 1])
 			lives++;
 		if (lives == 0)
 			remove_cell(c, i);
@@ -80,7 +74,8 @@ void	get_cells_lives(t_island *i, t_map *m)
 
 void	remove_cell(t_cell *c, t_island *i)
 {
-	t_cell *cursor;
+	t_cell	*cursor;
+	t_cell	*tmp;
 
 	cursor = i->first;
 	while (cursor != NULL)
@@ -89,7 +84,9 @@ void	remove_cell(t_cell *c, t_island *i)
 		{
 			if (cursor->next->x == c->x && cursor->next->y == c->y)
 			{
+				tmp = cursor->next;
 				cursor->next = cursor->next->next;
+				free(tmp);
 				break;
 			}
 		}
