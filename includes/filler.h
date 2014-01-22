@@ -93,6 +93,7 @@ void	remove_cell(t_cell *c, t_island *i);
 
 t_island	*get_island(char *line, int x);
 t_island	*get_op_island(char *line, int x);
+t_island	*getfakewalls(t_map *map);
 t_island	*init_island(void);
 void		add_cell(t_island *island, int x, int y);
 void		print_island(t_island *i);

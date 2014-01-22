@@ -84,17 +84,24 @@ int	get_play_val(t_token *token, t_play *play, t_map *map)
 	int	val;
 	int	tmpval;
 	t_island	*op_i;
+	t_island	*fakewalls;
 	t_cell		*cursor;
 
-	op_i = get_op_island(NULL, 0);
-	cursor = op_i->first;
 	val = 1;
+	fakewalls = getfakewalls(map);
+	op_i = get_op_island(NULL, 0);
+	if (fakewalls->first != NULL)
+		cursor = fakewalls->first;
+	else
+		cursor = op_i->first;
 	while (cursor != NULL)
 	{
 		if ((tmpval = get_cell_val(cursor, token, play, map)) < 0)
 			return (MAXINT);
-		else
-		val += tmpval;
+		else if (tmpval > val && fakewalls->first != NULL)
+			val = tmpval;
+		else if (fakewalls->first == NULL)
+			val += tmpval;
 		cursor = cursor->next;
 	}
 	return (val);

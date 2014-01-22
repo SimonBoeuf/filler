@@ -56,6 +56,29 @@ t_island	*init_island(void)
 	return (i);
 }
 
+t_island	*getfakewalls(t_map *map)
+{
+	t_island	*is;
+	int		i;
+
+	is = init_island();
+	i = 0;
+	while(i < map->rows)
+	{
+		if (map->token[i][0] == '.')
+			add_cell(is, i, 0);
+		i++;
+	}
+	i = 0;
+	while(i < map->cols)
+	{
+		if (map->token[0][i] == '.')
+			add_cell(is, 0, i);
+		i++;
+	}
+	return is;
+}
+
 void		add_cell(t_island *island, int x, int y)
 {
 	t_cell	*c;
