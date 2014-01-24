@@ -1,6 +1,4 @@
-#include "./includes/filler.h"
-
-static int		get_next_line_2(int const fd, char **line);
+#include "filler.h"
 
 static char		*get_line(char *s)
 {
@@ -21,11 +19,11 @@ static char		*get_line(char *s)
 	return (line);
 }
 
-static int		get_next_line_2(int const fd, char **line)
+static int		get_next_line(int const fd, char **line)
 {
 	char			buf[BUFF_SIZE + 1];
-	static	char	*result;
-	static	int		x;
+	static char		*result;
+	static int		x;
 	int				ret;
 
 	if (result != NULL && (ft_strchr(result, '\n') || x))
@@ -49,10 +47,10 @@ static int		get_next_line_2(int const fd, char **line)
 	}
 }
 
-int				get_next_line(int const fd, char **line)
+int				ft_gnl(int const fd, char **line)
 {
 	if (fd < 0 || BUFF_SIZE <= 0)
 		return (-1);
 	else
-		return (get_next_line_2(fd, line));
+		return (get_next_line(fd, line));
 }
