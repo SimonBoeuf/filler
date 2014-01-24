@@ -6,7 +6,7 @@
 /*   By: midoubih <midoubih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/22 12:27:57 by midoubih          #+#    #+#             */
-/*   Updated: 2014/01/23 13:47:49 by midoubih         ###   ########.fr       */
+/*   Updated: 2014/01/24 18:22:30 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char	*get_map_line(char *line);
 t_map	*get_map(char **line);
 void	print_map(t_map *m);
 
-int	get_token_lines(char *str);
 int	get_token_cols(char *str);
 t_token	*new_token(int	rows, int cols);
 t_token	*get_token(char **line);
@@ -113,7 +112,6 @@ int	is_player(char c);
 int	is_opponent_player(char c);
 int	is_shape(char c);
 #endif
-=======
 typedef struct		s_board
 {
 	char		**field;
@@ -142,4 +140,3 @@ int				is_dot(char c);
 int				is_piece(char c);
 
 #endif /* !FILLER_H */
->>>>>>> 832928d2ac5d0e6bb60cedad7cf8b0d6c513e551
